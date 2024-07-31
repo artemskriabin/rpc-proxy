@@ -12,7 +12,7 @@ A proxy for `web3` JSONRPC featuring:
 
 ### Prerequisites
 
-At least Go 1.12. Installation documentation here: https://golang.org/doc/install
+At least Go 1.18. Installation documentation here: https://golang.org/doc/install
 
 ### How to Use
 
