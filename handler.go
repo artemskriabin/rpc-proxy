@@ -207,7 +207,7 @@ func (t *myTransport) RoundTrip(req *http.Request) (*http.Response, error) {
 	}
 
 	// gotils.L(ctx).Debug().Print("Forwarding request")
-	req.Host = req.RemoteAddr //workaround for CloudFlare
+	//req.Host = req.RemoteAddr //workaround for CloudFlare
 	return http.DefaultTransport.RoundTrip(req)
 }
 

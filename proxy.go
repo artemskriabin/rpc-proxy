@@ -37,7 +37,14 @@ func (cfg *ConfigData) NewServer() (*Server, error) {
 	if err != nil {
 		return nil, err
 	}
-	s := &Server{target: url, proxy: httputil.NewSingleHostReverseProxy(url), wsProxy: NewProxy(wsurl)}
+	proxy := &httputil.ReverseProxy{
+		Rewrite: func(r *httputil.ProxyRequest) {
+			r.SetURL(url)
+			r.Out.Host = url.Host // if desired
+			r.Out.URL.Path = url.Path
+		},
+	}
+	s := &Server{target: url, proxy: proxy /*httputil.NewSingleHostReverseProxy(url)*/, wsProxy: NewProxy(wsurl)}
 	s.myTransport.blockRangeLimit = cfg.BlockRangeLimit
 	s.myTransport.url = cfg.URL
 	s.matcher, err = newMatcher(cfg.Allow)
